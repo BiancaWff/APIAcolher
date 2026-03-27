@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable; // Útil se for usar para login
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class Usuario extends Authenticatable
 {
     use Notifiable;
+    use HasApiTokens, Notifiable;
 
     protected $table = 'usuario'; // Define o nome exato da tabela
     protected $primaryKey = 'id_usuario';
@@ -34,4 +36,8 @@ class Usuario extends Authenticatable
     protected $casts = [
         'senha' => 'hashed', // Faz o hash automático se estiver no Laravel 10+
     ];
+    public function getAuthPassword()
+{
+    return $this->senha;
+}
 }
